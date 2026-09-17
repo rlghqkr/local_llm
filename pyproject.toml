@@ -4,9 +4,12 @@ version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [
     "edge-tts>=7.2.8",
+    "fastapi[standard]>=0.141.1",
     "faster-whisper>=1.2.1",
     "ollama>=0.6.2",
     "piper-tts>=1.8.0",
+    "pydantic>=2.13.5",
+    "pydentic>=0.0.1.dev3",
     "pygame>=2.6.1",
     "scipy>=1.18.1",
     "sounddevice>=0.5.6",
