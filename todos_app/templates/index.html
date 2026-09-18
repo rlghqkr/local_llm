@@ -1,0 +1,36 @@
+
+{% extends 'base.html' %}  
+{% block content %}
+    
+    <main>
+        <a href="/"><p class="head_img"></p></a>
+        <h4>나를 성장시키는 메모</h4>
+        <br>
+    <form action="/add" method="post">
+        <!-- <textarea name="task" rows="5" placeholder="Enter your task" id="task" required></textarea> -->
+        <textarea name="task" rows="5" placeholder="Enter your task" id="task"></textarea>
+        <button type="submit" id="add_task">
+          Add
+        </button>
+    </form>
+	
+	    <br>
+	    <h2>Tasks</h2>
+
+	    <div>
+            {% for task in todos %}
+            <div class="task">
+                {% if task.completed %}
+                <s>{{ task.task }}</s>
+                {% else %}
+                    {{ task.task }}
+                {% endif %}
+	                <small>
+	                    <a href="/edit/{{task.id}}">Edit</a>
+	                    <a href="/delete/{{task.id}}">Delete</a>
+	                </small>
+	        </div>
+            {% endfor %}
+	    </div>
+    </main>
+{% endblock content %}

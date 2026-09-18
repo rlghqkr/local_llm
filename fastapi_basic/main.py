@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel, HttpUrl
+import uvicorn
 
 # 실행: uvicorn main:app --reload
 # 접속: http://localhost:8000/  (또는 http://127.0.0.1:8000/)
@@ -19,13 +20,14 @@ class UserCreate(BaseModel):
     user_fullname: str | None = None
     email: str | None = None
 
-
+# DTO : 응답 전송 객체
 class UserResponse(BaseModel):
     """응답 바디: password를 제외하고 반환"""
     username: str
     avatar_url: HttpUrl | None = None
     user_fullname: str | None = None
     email: str | None = None
+
 
 
 # ──────────────────────────────────────────────
@@ -65,7 +67,12 @@ def create_user(user: UserCreate):
     print(f"username: {user.username}")
     print(f"avatar_url: {user.avatar_url}")
     print(f"user_fullname: {user.user_fullname}")
-    return user  # response_model에 따라 password는 응답에서 제외됨
+
+    user_info = UserResponse(
+        name=user.username,
+        avatar_url=user.avatar_url,
+    )
+    return user_info  # response_model에 따라 password는 응답에서 제외됨
 
 
 # POST http://localhost:8000/userid/1234?q=test
@@ -73,3 +80,8 @@ def create_user(user: UserCreate):
 def create_user_by_id(user_id: int, q: str | None = None):
     print(f"user_id: {user_id}, q: {q}")
     return {"user_id": user_id, "q": q}
+
+if __name__ == "__main__":
+    
+    #uvicorn.run("현재_파일이름:FastAPI객체_식별자", reload=True)
+    uvicorn.run("main:app", reload=True)
